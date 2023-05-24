@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/src/assets/style.css" />
+    <script src="https://miro.com/app/static/sdk/v2/miro.js"></script>
+    <script type="module" src="/src/app.js"></script>
+    <title>Enapter Energy Icons</title>
+  </head>
+  <body>
+    <div x-data="app()" class="enp-container">
+      <div class="enp-input form-group">
+        <input x-ref="query" x-model="query" class="input" type="text" placeholder="Search" />
+        <svg class="enp-input__clear-query" x-show="query !== ''" @click="query = ''; $focus.focus($refs.query)" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </div>
+
+      <div class="enp-icons-container" tabindex="-1">
+        <div class="enp-intro" x-show="query == ''">
+          Drag and drop icons onto your board.
+          <a href="https://discord.gg/JjTEfd8d2U" target="_blank">Reach out to us</a> for requests or feedback.
+        </div>
+
+        <div class="enp-icons" tabindex="-1">
+          <template x-for="icon in icons" :key="icon.url">
+            <div tabindex="0" @click="$focus.focus($el)" @keydown.enter="createImage(icon)" class="enp-icons__icon">
+              <div><img :src="icon.url" draggable="false" class="miro-draggable enp-icons__draggable" /></div>
+              <div x-text="icon.name" class="enp-icons__icon-name"></div>
+            </div>
+          </template>
+        </div>
+        <div x-show="icons.length == 0 && query !== ''" class="enp-icons__no-results">
+          There are no icons matching your search.
+          <a href="https://discord.gg/JjTEfd8d2U" target="_blank">Reach out to us</a> to request an icon.
+        </div>
+      </div>
+
+      <div class="enp-info">
+        <a href="https://handbook.enapter.com/icons.html" target="_blank" class="enp-info__author">
+          <div>by</div>
+          <img src="/src/assets/enapter-logo.svg" alt="Enapter logo" class="enp-info__logo" />
+        </a>
+        <a href="https://discord.gg/JjTEfd8d2U" target="_blank">
+          <svg class="enp-info__chat-icon" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M11 10a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm5 0a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm-7.555 5.832C9.602 16.603 10.792 17 12 17c1.208 0 2.398-.397 3.555-1.168a1 1 0 0 0-1.11-1.664C13.602 14.73 12.792 15 12 15c-.792 0-1.602-.27-2.445-.832a1 1 0 0 0-1.11 1.664z" /><path fill-rule="evenodd" clip-rule="evenodd" d="M4.213 22.316a2 2 0 0 1-2.53-2.53l1.213-3.64A9.966 9.966 0 0 1 2 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10c-1.45 0-2.856-.31-4.146-.897l-3.64 1.213zm4.162-3.181a8 8 0 1 0-3.511-3.511l.19.372L3.58 20.42l4.423-1.474.372.19z" /></svg>
+          Request icon
+        </a>
+      </div>
+    </div>
+  </body>
+</html>
